@@ -8,6 +8,8 @@ import NewRoundForm from "../components/home/newRoundForm.jsx";
 import ViewChampionship from "../components/home/ViewChampionship.jsx";
 import ViewCompetitions from "../components/home/ViewCompetitions.jsx";
 import ViewMyScores from "../components/home/ViewMyScores.jsx";
+import { useParams } from "react-router-dom";
+
 const overViewCardsDUMMY = {
   cardOne: {
     mainStat: "7",
@@ -39,14 +41,15 @@ const sideNavDUMMY = [
 function ArcherPage() {
   const [selectedSideNav, setSelectedSideNav] = useState("newRound");
 
+  const { id } = useParams();
+
   function handleSelectSideNav(id) {
-    console.log(id);
     setSelectedSideNav(id);
   }
   let mainContent;
   switch (selectedSideNav) {
     case "newRound":
-      mainContent = <NewRoundForm />;
+      mainContent = <NewRoundForm archerId={id} />;
       break;
 
     case "competitions":

@@ -16,7 +16,7 @@ function LoginPage() {
     } else if (!isNaN(Number(trimmedValue)) && trimmedValue !== "") {
       const id = Number(trimmedValue);
       if (id >= 1 && id <= 500) {
-        navigate(`/archer`);
+        navigate(`/archer/${inputValue}`);
       } else {
         alert("ArcheryID must be a number between 1 and 500.");
       }
