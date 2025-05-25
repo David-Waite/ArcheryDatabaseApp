@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+.header h2 {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.main {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.bottom div {
+  display: flex;
+  flex-direction: column;
+}
+.bottom p {
+  font-size: 16px;
+  font-weight: 500;
+}
+.bottom button {
+  background-color: #ffc500;
+  color: #f1fff5;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #aeaeae;
+  margin-top: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.bottom button:hover {
+  background-color: #e6b000;
+}

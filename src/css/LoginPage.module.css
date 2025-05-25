@@ -1,0 +1,76 @@
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 200px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+
+  background-color: #304235;
+  border-radius: 24px;
+}
+
+.login-form label {
+  display: none;
+}
+.login-input {
+  background-color: #f1fff5;
+  margin: 24px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.login-btn {
+  background-color: #ffc500;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  color: white;
+  font-size: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.login-btn:hover {
+  background-color: #dba800;
+}
+
+.login-message-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 200px;
+  gap: 24px;
+  background-color: #345f40;
+  height: 100vh;
+  width: 50vw;
+  color: white;
+}
+
+.login-message-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-message-container h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.login-message-container h2 {
+  font-size: 28px;
+  font-weight: 400;
+}
+.login-message-container p {
+  font-size: 16px;
+  font-weight: 400;
+}

@@ -1,0 +1,137 @@
+.topOverView {
+  background-color: #345f40;
+}
+
+.container {
+  background-color: #e7eaef;
+}
+
+.middleMainContent {
+  background-color: #fcfffd;
+}
+
+.OverViewCardContainer {
+  background-color: #304235;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+
+  color: #f1fff5;
+  width: 100%;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.OverViewCardContainer h2 {
+  font-size: 40px;
+}
+.OverViewCardContainer p {
+  font-size: 16px;
+  font-weight: 10;
+}
+
+.nav {
+  display: flex;
+  padding: 12px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #345f40;
+}
+
+.nav h1 {
+  color: #f1fff5;
+  font-weight: 100;
+  font-size: 24px;
+}
+.nav button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #ffc500;
+  color: #f1fff5;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.nav button:hover {
+  background-color: #e3ae00;
+}
+.topOverView {
+  display: flex;
+  padding: 0 80px 40px 0;
+}
+.archerProfile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.archerProfile div {
+  background-color: #ffc500;
+  color: #f1fff5;
+  height: 122px;
+  width: 122px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.leftTopOverView {
+  width: 424px;
+  min-width: 424px;
+  max-width: 424px;
+}
+
+.mainTopOverView {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+}
+
+.leftMainNav {
+  display: grid;
+  padding: 40px 80px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 120px;
+  gap: 24px;
+  padding-right: 80px;
+}
+
+.sideNavComponentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #383c45;
+  height: 120px;
+  width: 120px;
+  border-radius: 24px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.sideNavComponentContainer:hover {
+  background-color: #304235cc;
+  color: #e7eaef4f;
+}
+.sideNavComponentContainer p {
+  font-size: 14px;
+}
+.sideNavSelected {
+  background-color: #304235 !important;
+  color: #e7eaef !important;
+}
+.mainContent {
+  display: flex;
+
+  padding: 0px 0px;
+}
+.middleMainContent {
+  height: calc(100vh - 181px);
+  width: 100%;
+  margin-top: -40px;
+  border-radius: 24px;
+  padding: 24px;
+  margin: -40px 80px 0 0;
+}

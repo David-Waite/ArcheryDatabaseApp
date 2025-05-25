@@ -1,0 +1,41 @@
+.container {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #aeaeae;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.container:hover {
+  background-color: #dbdbdb;
+}
+
+.container:focus {
+  border-radius: 8px 8px 0 0;
+}
+.container:hover option {
+  background-color: white;
+}
+.container option {
+  cursor: pointer;
+}
+.disabled {
+  color: rgb(148, 148, 148);
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+.dropdownBtn {
+  cursor: pointer;
+  color: #1b1b1b;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
