@@ -9,20 +9,12 @@ export default function NewRoundForm({ archerId }) {
   const [round, setRound] = useState("");
   const [allEquipment, setAllEquipment] = useState([]);
   const [allClasses, setAllClasses] = useState([]);
+  const [allCurrentCompetitions, setAllCurrentCompetitions] = useState([]);
+  const [allRounds, setAllRounds] = useState([]);
+  const [competitionRounds, setCompetitionRounds] = useState([]);
+  const [category, setCategory] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
-
-  const competitionDUMMY = [
-    { id: 1, value: "comp1" },
-    { id: 2, value: "comp2" },
-  ];
-
-  const roundDummy = [
-    { id: 1, value: "WA70/1440" },
-    { id: 2, value: "WA90/1440" },
-  ];
-
-  // In your NewRoundForm.jsx component
 
   useEffect(() => {
     const fetchAllFormData = async () => {
@@ -61,11 +53,14 @@ export default function NewRoundForm({ archerId }) {
           possibleClassesResponse,
           defaultEquipmentResponse,
           allEquipmentResponse,
+          currentCompetitionsResponse,
+          allRoundsResponse,
         ] = await Promise.all([
           fetch(`/api/archers/${defaultClass.id}/possibleclass`),
-
           fetch(`/api/archers/${archerId}/equipment`),
           fetch("/api/allEquipment"),
+          fetch("/api/currentCompetitions"),
+          fetch("/api/allRounds"),
         ]);
 
         if (!possibleClassesResponse.ok)
@@ -74,10 +69,17 @@ export default function NewRoundForm({ archerId }) {
           throw new Error("Failed to fetch default equipment");
         if (!allEquipmentResponse.ok)
           throw new Error("Failed to fetch all equipment");
+        if (!currentCompetitionsResponse.ok)
+          throw new Error("Failed to fetch current Competitions");
+        if (!allRoundsResponse.ok)
+          throw new Error("Failed to fetch all rounds");
 
         const possibleClassesData = await possibleClassesResponse.json();
         const defaultEquipmentData = await defaultEquipmentResponse.json();
         const allEquipmentData = await allEquipmentResponse.json();
+        const currentCompetitionsData =
+          await currentCompetitionsResponse.json();
+        const allRoundsData = await allRoundsResponse.json();
 
         const allClassArray = possibleClassesData.map((item) => ({
           id: item.class_ID,
@@ -97,6 +99,21 @@ export default function NewRoundForm({ archerId }) {
           value: item.type,
         }));
         setAllEquipment(allEquipmentArray);
+
+        const currentCompetitionsArray = currentCompetitionsData.map(
+          (item) => ({
+            id: item.competition,
+            value: item.competitionName,
+          })
+        );
+        setAllCurrentCompetitions(currentCompetitionsArray);
+
+        const allRoundsArray = allRoundsData.map((item) => ({
+          id: item.ID,
+          value: item.name,
+        }));
+
+        setAllRounds(allRoundsArray);
       } catch (error) {
         console.error("Error fetching form data:", error);
       } finally {
@@ -107,20 +124,116 @@ export default function NewRoundForm({ archerId }) {
     fetchAllFormData();
   }, [archerId]);
 
+  // get categoy when class and bow are selected
+  useEffect(() => {
+    if (!shootingClass || !bowType) {
+      setCategory("");
+      return;
+    }
+    fetch(`/api/category?equipmentId=${bowType.id}&classId=${shootingClass.id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((category) => {
+        setCategory({
+          id: category[0].categoryID,
+          value: category[0].categoryName,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, [shootingClass, bowType]);
+
+  // get new possible rounds when competition and class are selected
+
+  useEffect(() => {
+    if (!category.id || !competition) {
+      console.log("setting to null");
+
+      setCompetitionRounds(null);
+
+      return;
+    }
+
+    const fetchCompetitionRoundData = async () => {
+      setIsLoading(true);
+
+      try {
+        const [defaultRoundsResponse, competitionRoundsResponse] =
+          await Promise.all([
+            fetch(
+              `/api/defaultCompetitionRounds?competitionId=${competition.id}&categoryId=${category.id}`
+            ),
+            fetch(
+              `/api/competitionRounds?competitionId=${competition.id}&categoryId=${category.id}`
+            ),
+          ]);
+
+        if (!defaultRoundsResponse.ok) {
+          throw new Error(
+            `Failed to fetch default rounds: Server responded with ${defaultRoundsResponse.status}`
+          );
+        }
+        if (!competitionRoundsResponse.ok) {
+          throw new Error(
+            `Failed to fetch competition rounds: Server responded with ${competitionRoundsResponse.status}`
+          );
+        }
+
+        const [defaultRoundData, allRoundsData] = await Promise.all([
+          defaultRoundsResponse.json(),
+          competitionRoundsResponse.json(),
+        ]);
+
+        if (defaultRoundData && defaultRoundData.length > 0) {
+          setRound({
+            id: defaultRoundData[0].finalRoundID,
+            value: defaultRoundData[0].finalRoundName,
+          });
+        }
+
+        const allCompetitionRounds = allRoundsData.map((item) => ({
+          id: item.round_ID,
+          value: item.round_Name,
+          extra: item.round_Type_Description,
+        }));
+        setCompetitionRounds(allCompetitionRounds);
+      } catch (error) {
+        console.error("Error fetching round data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false
+      }
+    };
+
+    fetchCompetitionRoundData();
+  }, [category.id, competition]); // Dependencies are correct
+
   return (
     <>
       {isLoading ? (
         <p>Loading</p>
       ) : (
         <FormContainer
-          header={<h2>New Round Details</h2>}
+          header={<h2>New Round Details </h2>}
           main={
             <>
               <SelectInput
                 state={competition}
                 setState={setCompetition}
-                defaultValue={"Competition"}
-                options={competitionDUMMY}
+                placeholder={"No Competition"}
+                optional={true}
+                options={allCurrentCompetitions}
+              />
+              <SelectInput
+                state={round}
+                setState={setRound}
+                placeholder={"Round"}
+                optional={false}
+                options={competitionRounds ? competitionRounds : allRounds}
               />
               <SelectInput
                 state={bowType}
@@ -132,18 +245,11 @@ export default function NewRoundForm({ archerId }) {
                 setState={setShootingClass}
                 options={allClasses}
               />
-              <SelectInput
-                state={round}
-                setState={setRound}
-                defaultValue={"Round"}
-                options={roundDummy}
-              />
             </>
           }
           bottom={
             <div>
-              {bowType.value}
-              <p>You will be shooting under category</p>
+              <p>You will be shooting under {category.value}</p>
               <button>Start new round</button>
             </div>
           }

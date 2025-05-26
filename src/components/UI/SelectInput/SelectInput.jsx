@@ -6,8 +6,10 @@ import { FaChevronDown } from "react-icons/fa";
 export default function SelectInput({
   state,
   setState,
-  defaultValue,
+
   options,
+  optional,
+  placeholder,
 }) {
   const handleChange = (e) => {
     const selectedId = e.target.value;
@@ -26,15 +28,18 @@ export default function SelectInput({
         value={state ? state.id : ""}
         onChange={handleChange}
       >
-        {defaultValue && (
+        {placeholder && !optional && (
           <option value="" disabled>
-            {defaultValue}
+            {placeholder}
           </option>
         )}
 
+        {placeholder && optional && <option value="">{placeholder}</option>}
+
         {availableOptions.map((option) => (
           <option key={option.id} value={option.id}>
-            {option.value}
+            {option?.extra}
+            {option?.extra && " Round:"} {option.value}
           </option>
         ))}
       </select>
