@@ -1,0 +1,45 @@
+.container h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.container h2 {
+  font-weight: 400;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.container h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.container h4 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+.container table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.container td {
+  padding: 8px;
+}
+
+.container tr:hover {
+  background-color: #345f40;
+  color: white;
+}
+.container table,
+.container tr,
+.container td {
+  border: 1px solid black;
+  cursor: pointer;
+}

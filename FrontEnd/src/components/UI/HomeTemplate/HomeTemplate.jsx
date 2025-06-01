@@ -16,6 +16,7 @@ export default function HomeTemplate({
   mainContent,
   selectedSideNav,
   handleSelectSideNav,
+  goBack,
 }) {
   const navigate = useNavigate();
   function handleLogout() {
@@ -41,11 +42,11 @@ export default function HomeTemplate({
           />
           <OverViewCard
             mainStat={overViewCards.cardTwo.mainStat}
-            desc={overViewCards.cardOne.desc}
+            desc={overViewCards.cardTwo.desc}
           />
           <OverViewCard
             mainStat={overViewCards.cardThree.mainStat}
-            desc={overViewCards.cardOne.desc}
+            desc={overViewCards.cardThree.desc}
           />
         </div>
       </section>
@@ -67,7 +68,12 @@ export default function HomeTemplate({
             );
           })}
         </div>
-        <div className={styles["middleMainContent"]}>{mainContent}</div>
+        <div className={styles["middleMainContent"]}>
+          <button className={styles["goBackBtn"]} onClick={goBack}>
+            Back
+          </button>
+          {mainContent}
+        </div>
       </section>
     </div>
   );

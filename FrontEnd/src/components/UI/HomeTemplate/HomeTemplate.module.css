@@ -128,10 +128,27 @@
   padding: 0px 0px;
 }
 .middleMainContent {
+  position: relative;
   height: calc(100vh - 181px);
   width: 100%;
   margin-top: -40px;
   border-radius: 24px;
   padding: 24px;
   margin: -40px 80px 0 0;
+  overflow-y: scroll;
+  padding-bottom: 40px;
+}
+
+.goBackBtn {
+  position: absolute;
+  right: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #383c45;
+  color: #f1fff5;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.goBackBtn:hover {
+  background-color: #304235cc;
 }

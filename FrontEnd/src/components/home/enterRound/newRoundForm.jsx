@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import SelectInput from "../UI/SelectInput/SelectInput";
-import FormContainer from "../UI/FormContainer/FormContainer";
+import SelectInput from "../../UI/SelectInput/SelectInput";
+import FormContainer from "../../UI/FormContainer/FormContainer";
 
-export default function NewRoundForm({ archerId }) {
+export default function NewRoundForm({ archerId, createRoundShot }) {
   const [competition, setCompetition] = useState("");
   const [bowType, setBowType] = useState("");
   const [shootingClass, setShootingClass] = useState("");
@@ -13,6 +13,7 @@ export default function NewRoundForm({ archerId }) {
   const [allRounds, setAllRounds] = useState([]);
   const [competitionRounds, setCompetitionRounds] = useState([]);
   const [category, setCategory] = useState("");
+  const [error, setError] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -212,6 +213,21 @@ export default function NewRoundForm({ archerId }) {
     fetchCompetitionRoundData();
   }, [category.id, competition]); // Dependencies are correct
 
+  async function handleStartNewRoundButtonPress() {
+    if (!round) {
+      setError("Please enter a round to continue");
+    }
+
+    await createRoundShot({
+      archerID: archerId,
+      competitionID: competition.id ? competition.id : null,
+      equipmentID: bowType.id,
+      categoryID: category.id,
+      roundID: round.id,
+      roundName: round.value,
+    });
+  }
+
   return (
     <>
       {isLoading ? (
@@ -249,8 +265,15 @@ export default function NewRoundForm({ archerId }) {
           }
           bottom={
             <div>
+              {error && (
+                <span>
+                  <p>{error}</p>
+                </span>
+              )}
               <p>You will be shooting under {category.value}</p>
-              <button>Start new round</button>
+              <button onClick={handleStartNewRoundButtonPress}>
+                Start new round
+              </button>
             </div>
           }
         ></FormContainer>
